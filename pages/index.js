@@ -1,35 +1,7 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-          * {
-             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
-
-          body {
-            font-family: 'Open Sans', sans-serif;
-          }
-          /* App fit Height */
-          html, body, #__next {
-            min-height: 100vh;
-            display: flex;
-            flex: 1;
-          }
-
-          #__next {
-            flex: 1;
-          }
-
-          #__next > * {
-            flex: 1;
-          }
-         `}</style>
-  );
-}
 
 function Title(props) {
 
@@ -49,11 +21,12 @@ function Title(props) {
 }
 
 export default function HomePage() {
-  const username = 'peas';
+  // const username = 'peas';
+  const [username, setUsername] = React.useState('');
+  const roteamento = useRouter();
 
   return(
     <>
-     <GlobalStyle />
      <Box styleSheet={{
        display: 'flex', alignItems: 'center', justifyContent: 'center',
        backgroundColor: appConfig.theme.colors.primary[500],
@@ -78,6 +51,12 @@ export default function HomePage() {
         {/**Formulario */}
         <Box
          as="form"
+         onSubmit={function (event) {
+            event.preventDefault();
+            console.log('alguem submeteu o form');
+            roteamento.push('/chat')
+           // window.location.href="/chat"
+         }}
          styleSheet={{
            display: 'flex', flexDirection: 'column', alignItems: 'center',
            justifyContent: 'center', width: { xs: '100%', sm: '50%'}, textAlign: 'center', marginBottom: '32px',
@@ -89,6 +68,16 @@ export default function HomePage() {
           </Text>
 
           <TextField 
+            type='text'
+            value={username}
+            onChange={function (event) {
+               console.log("usuario digitou", event.target.value);
+               // onde ta o valor?
+               const valor = event.target.value;
+               // trocar o valor da variavel
+               setUsername(valor);
+
+            }}
             fullWidth
             textFieldColors={{
               neutral: {
