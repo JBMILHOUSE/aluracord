@@ -1,21 +1,46 @@
 import { Box, Button, Image, Text, TextField } from "@skynexui/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import appConfig from '../config.json';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzY3MDQ0NiwiZXhwIjoxOTU5MjQ2NDQ2fQ.CNAHRjvQePpvUAopiNJcdD3x4736Fydedc45QtOVi2Y';
+const SUPABASE_URL = 'https://ydzrcupwowzfpuaanjbu.supabase.co';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     const [message, setMessage] = useState('');
     const [listMessage, setListMessages] = useState([]);
 
+    useEffect(() => {
+        supabaseClient
+            .from('mensagens')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data }) => {
+                console.log("dados da consulta ", data);
+                setListMessages(data);
+            });
+    }, []);
+
     function handleNewMessage(newMessage) {
         const mensagem = {
-            id: listMessage.length + 1,
-            de: 'fulano',
+            // id: listMessage.length + 1,
+            de: 'peas',
             texto: newMessage,
         };
-        setListMessages([
-            mensagem,
-            ...listMessage,
-        ]);
+
+        supabaseClient
+           .from('mensagens')
+           .insert([
+               mensagem
+        ])
+        .then(({ data }) => {
+            console.log('Criando mensagem: ', data);
+            setListMessages([
+                data[0],
+                ...listMessage,
+            ]);
+        });
         setMessage('');
     }
     return (
@@ -37,7 +62,7 @@ export default function ChatPage() {
                     borderRadius: '5px',
                     backgroundColor: appConfig.theme.colors.neutrals[700],
                     height: '100%',
-                    maxWidtth: '95%',
+                    maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
                 }}
@@ -106,11 +131,11 @@ export default function ChatPage() {
 function Header() {
     return (
         <>
-            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alighItems: 'center', justifyContent: 'space-between' }}>
-                <Text variant="heading5">
+            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text variant='heading5'>
                     Chat
                 </Text>
-                <Button variant="tertiary" colorVariant="neutral" label="Logout" href="/" />
+                <Button variant='tertiary' colorVariant='neutral' label='Logout' href="/" />
             </Box>
         </>
     )
@@ -157,7 +182,7 @@ function MessageList(props) {
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
-                                src={`https://github.com/vanessametonini.png`}
+                                src={`https://github.com/${mensagem.de}.png`}
                             />
                             <Text tag="strong">
                                 {mensagem.de}
