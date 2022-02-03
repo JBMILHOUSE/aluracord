@@ -1,11 +1,12 @@
 
 function GlobalStyle() {
-    return (
-      <style global jsx>{`
+  return (
+    <style global jsx>{`
             * {
-               margin: 0;
+              margin: 0;
               padding: 0;
               box-sizing: border-box;
+              list-style: none;
             }
   
             body {
@@ -26,15 +27,15 @@ function GlobalStyle() {
               flex: 1;
             }
            `}</style>
-    );
+  );
 }
 
 export default function App({ Component, pageProps }) {
-   return(
-       <>
-         <GlobalStyle /> 
-         <Component {...pageProps} />
-       </>
-   
-   )
+  return (
+    <>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </>
+
+  )
 }

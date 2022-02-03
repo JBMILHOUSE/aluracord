@@ -51,26 +51,26 @@ export default function HomePage() {
         {/**Formulario */}
         <Box
          as="form"
-         onSubmit={function (event) {
+         onSubmit={(event) => {
             event.preventDefault();
             console.log('alguem submeteu o form');
-            roteamento.push('/chat')
+            roteamento.push(`/chat?username=${username}`);
            // window.location.href="/chat"
          }}
          styleSheet={{
            display: 'flex', flexDirection: 'column', alignItems: 'center',
-           justifyContent: 'center', width: { xs: '100%', sm: '50%'}, textAlign: 'center', marginBottom: '32px',
+           justifyContent: 'center', width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
          }}
         >
           <Title tag="h2">Boas vindas de volta!</Title>
-          <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300]}}>
+          <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
             {appConfig.name}
           </Text>
 
           <TextField 
             type='text'
             value={username}
-            onChange={function (event) {
+            onChange={(event) => {
                console.log("usuario digitou", event.target.value);
                // onde ta o valor?
                const valor = event.target.value;
@@ -142,14 +142,3 @@ export default function HomePage() {
     </>
   );
 }
-// function HomePage() {
-//   return (
-//     <div>
-//       <GlobalStyle />
-//       <Title tag="h2">Boas vindas de volta!</Title>
-//       <h2>Discord - Alura Matrix</h2>
-//     </div>
-//   )
-// }
-
-//export default HomePage
