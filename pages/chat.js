@@ -146,7 +146,7 @@ export default function ChatPage() {
                         />
                         <ButtonSendSticker
                             onStickerClick={(sticker) => {
-                                //   console.log('[USANDO O COMPONENTE] Salva esse sticker no banco', sticker);
+                                // console.log('[USANDO O COMPONENTE] Salva esse sticker no banco', sticker);
                                 handleNewMessage(':sticker:' + sticker)
                             }}
                         />
