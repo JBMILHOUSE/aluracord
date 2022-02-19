@@ -1,5 +1,3 @@
-## :clipboard: Sobre
-Chat do discord
 
 ## :rocket: Tecnologias
 - [Nextjs](https://nextjs.org/)
